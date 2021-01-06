@@ -1,4 +1,3 @@
-import getLunar from '../../../backend/src/service/getDate';
 import { get } from './http';
 
 function handleResp(resp) {
