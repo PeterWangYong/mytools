@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="container">
+    <div id="header-image"
+         class="container">
       <img class="bg-image"
            :src="this.bgImageSrc"
            alt="image" />
@@ -47,12 +48,14 @@
                 placeholder="第一句"></el-input>
       <el-input v-model="text.second"
                 placeholder="第二句"></el-input>
+      <el-button @click="handleDownload">下载</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import { getBgImage, getDate } from '@/api';
+import html2canvas from 'html2canvas'
 export default {
   name: 'MyImage',
   data() {
@@ -74,6 +77,15 @@ export default {
       label: '皮特王同学',
     };
   },
+  methods: {
+    handleDownload() {
+      html2canvas(document.querySelector('#header-image'), {
+        useCORS: true,
+      }).then(canvas => {
+        document.body.appendChild(canvas)
+      })
+    }
+  },
   async mounted() {
     try {
       this.bgImageSrc = await getBgImage();
@@ -86,10 +98,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import url('https://fonts.googleapis.com/css?family=Lora:400,500,700&display=swap')
+
 .container
   width: 900px
   height: 383px
   position: relative
+  font-family: 'Lora'
 
 .form
   width: 900px
@@ -117,14 +132,14 @@ export default {
       font-size: 80px
 
     .month
-      top: 25px
+      top: 30px
       left: 30px
 
     .split
       top: 50px
 
     .day
-      top: 120px
+      top: 125px
       left: 65px
 
     .week, .term
