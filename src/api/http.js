@@ -1,5 +1,5 @@
 import axios from 'axios';
-const SERVER = 'http://114.215.192.37:12005';
+const SERVER = 'http://120.27.244.128:12005';
 
 async function get(path) {
   return await axios.get(`${SERVER}${path}`);
