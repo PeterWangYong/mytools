@@ -56,6 +56,7 @@
 <script>
 import { getBgImage, getDate } from '@/api';
 import html2canvas from 'html2canvas'
+import Canvg from 'canvg'
 export default {
   name: 'MyImage',
   data() {
@@ -82,7 +83,31 @@ export default {
       html2canvas(document.querySelector('#header-image'), {
         useCORS: true,
       }).then(canvas => {
-        document.body.appendChild(canvas)
+        // document.body.appendChild(canvas)
+        const url = canvas.toDataURL('image/png')
+        const a = document.createElement('a')
+        a.download = `${this.date.year}${this.date.month}${this.date.date}.jpg`
+        a.href = url
+        const event = new MouseEvent('click');
+        a.dispatchEvent(event);
+      })
+    },
+    svg2canvas() {
+      let svgElem = document.querySelectorAll('#header-image svg')
+      svgElem.forEach(async function (node) {
+        //获取svg的父节点
+        let parentNode = node.parentNode;
+        //获取svg的html代码
+        let svg = node.outerHTML.trim();
+        //创建一个<canvas>，用于放置转换后的元素
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const v = await Canvg.from(ctx, svg)
+        v.start()
+        //删除svg元素
+        parentNode.removeChild(node);
+        //增加canvas元素
+        parentNode.appendChild(canvas);
       })
     }
   },
@@ -90,6 +115,7 @@ export default {
     try {
       this.bgImageSrc = await getBgImage();
       this.date = await getDate();
+      this.svg2canvas()
     } catch (error) {
       console.log(error);
     }

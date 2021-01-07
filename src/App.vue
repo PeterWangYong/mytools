@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <MyImage></MyImage>
+    <HeaderImage></HeaderImage>
   </div>
 </template>
 
 <script>
-import MyImage from '@/components/MyImage';
+import HeaderImage from '@/components/HeaderImage';
 export default {
   name: 'App',
   components: {
-    MyImage,
+    HeaderImage
   },
 };
 </script>
