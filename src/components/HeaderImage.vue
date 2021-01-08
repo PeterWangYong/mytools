@@ -118,7 +118,7 @@ export default {
   async mounted() {
     try {
       this.bgImageSrc = await getBgImage();
-      // this.date = await getDate();
+      this.date = await getDate();
       this.svg2canvas()
     } catch (error) {
       console.log(error);
