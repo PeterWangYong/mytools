@@ -80,17 +80,21 @@ export default {
   },
   methods: {
     handleDownload() {
+      document.querySelector('.month').style.top = '23px'
+      document.querySelector('.day').style.top = '118px'
       html2canvas(document.querySelector('#header-image'), {
         useCORS: true,
       }).then(canvas => {
         // document.body.appendChild(canvas)
         const url = canvas.toDataURL('image/png')
         const a = document.createElement('a')
-        a.download = `${this.date.year}${this.date.month}${this.date.date}.jpg`
+        a.download = `${this.date.year}${this.date.month}${this.date.date}`
         a.href = url
         const event = new MouseEvent('click');
         a.dispatchEvent(event);
       })
+      document.querySelector('.month').style.top = '30px'
+      document.querySelector('.day').style.top = '125px'
     },
     svg2canvas() {
       let svgElem = document.querySelectorAll('#header-image svg')
@@ -114,7 +118,7 @@ export default {
   async mounted() {
     try {
       this.bgImageSrc = await getBgImage();
-      this.date = await getDate();
+      // this.date = await getDate();
       this.svg2canvas()
     } catch (error) {
       console.log(error);
